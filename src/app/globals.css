@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   Tokens de Repunte
+   Crema + tinta + UN acento. [COLOR_ACENTO] por defecto: terracota.
+   [TIPOGRAFIA_MARCA]: hoy stack del sistema; reemplazar por la fuente
+   de marca con next/font/local cuando esté definida.
+   ===================================================================== */
+:root {
+  --crema: #f6f1e9;
+  --crema-2: #ede5d8;
+  --tinta: #1a1a1a;
+  --tinta-suave: #5c564e;
+  --linea: #d9cfbf;
+  --acento: #c47c5a;        /* [COLOR_ACENTO] */
+  --acento-fuerte: #a5603f; /* hover / texto sobre crema (AA) */
+  --oliva: #6b7a5e;         /* estados positivos */
+  --error: #a3362a;
+}
+
+@theme inline {
+  --color-crema: var(--crema);
+  --color-crema-2: var(--crema-2);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --color-linea: var(--linea);
+  --color-acento: var(--acento);
+  --color-acento-fuerte: var(--acento-fuerte);
+  --color-oliva: var(--oliva);
+  --color-error: var(--error);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  background: var(--crema);
+  color: var(--tinta);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Foco visible y consistente para teclado */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Entrada sutil; se desactiva con reduced motion */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.entrada {
+  animation: subir 480ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.entrada-2 { animation-delay: 80ms; }
+.entrada-3 { animation-delay: 160ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .entrada { animation: none; }
+}
