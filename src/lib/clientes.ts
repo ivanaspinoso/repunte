@@ -1,5 +1,6 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { PRODUCTO_SLUG } from "@/lib/env";
@@ -43,6 +44,10 @@ const DIA_MS = 86_400_000;
  * Redirige a /login si no hay sesión.
  */
 export async function getClienteActual(): Promise<ClienteActual> {
+  // Datos del usuario logueado: siempre en un request real. Cubre los
+  // Date.now() de Supabase (vencimiento del token) y el de los días de prueba,
+  // que Cache Components no permite durante el prerender.
+  await connection();
   const supabase = await createClient();
   const { data: claims } = await supabase.auth.getClaims();
   const user = claims?.claims;
